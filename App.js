@@ -5,21 +5,24 @@ import {
   View,
   ScrollView,
   Button,
-  TextInput,
-  TouchableOpacity,
+  Header,
 } from 'react-native';
 import { f, auth, database } from './config/firebase_config.js';
 
-import { createStackNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 import Login from './components/screens/Login';
+import Home from './components/screens/Home';
+import SavedJobs from './components/screens/SavedJobs';
+import Applied from './components/screens/Applied';
 
-const MainStack = createStackNavigator({
-  Login: { screen: Login },
-  // Profile: { screen: ProfileScreen },
+const TabNavigator = createBottomTabNavigator({
+  Jobs: { screen: Home },
+  Save: { screen: SavedJobs },
+  Applied: { screen: Applied },
 });
 
-export default class App extends React.Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +30,7 @@ export default class App extends React.Component {
       email: '',
     };
 
-    // this.registerUser('testing3@email.com', 'fakepassword', 'John Doe');
+    this.registerUser('testing3@email.com', 'fakepassword', 'John Doe');
 
     f.auth().onAuthStateChanged(user => {
       if (user) {
@@ -83,11 +86,9 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 100,
+    marginTop: 40,
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   input: {
     height: 40,
@@ -106,3 +107,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
+
+export default createAppContainer(TabNavigator);

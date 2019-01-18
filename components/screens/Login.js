@@ -6,8 +6,10 @@ import {
   ScrollView,
   Button,
   TextInput,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
+import { f, database, auth } from 'firebase';
 
 export default class Login extends React.Component {
   render() {
