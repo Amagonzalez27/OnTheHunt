@@ -2,18 +2,35 @@ import {
   createSwitchNavigator,
   createStackNavigator,
   createAppContainer,
+  createBottomTabNavigator,
 } from 'react-navigation';
 
 // import the different screens
 import Loading from './components/screens/Loading';
 import SignUp from './components/screens/SignUp';
 import Login from './components/screens/Login';
-import Main from './components/screens/Main';
+import Home from './components/screens/Home';
+import SaveJobs from './components/screens/SavedJobs';
+import Applied from './components/screens/Applied';
 
-// create our app's navigation stack
-const AppStack = createStackNavigator({
-  Home: Main,
+// create bottom tabs
+const TabStack = createBottomTabNavigator({
+  Jobs: { screen: Home },
+  Save: { screen: SaveJobs },
+  Applied: { screen: Applied },
 });
+
+// create app's navigation stack
+const AppStack = createStackNavigator(
+  {
+    Home: { screen: TabStack },
+  },
+  {
+    initialRouteName: 'Home',
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
 
 const AuthStack = createStackNavigator({
   SignUp,

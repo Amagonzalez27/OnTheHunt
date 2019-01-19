@@ -7,36 +7,32 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Button,
 } from 'react-native';
 
+import { f } from '../../config/firebase_config';
+import Jobs from './Jobs';
+
 export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      jobposts: [
-        {
-          id: 1,
-          company: 'Amazon',
-          position: 'Sr. Software Engineer',
-          location: 'New York',
-          logo:
-            'https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZ0pjIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--35f6201e9066caf57547d2dd9d911004edfa8437/01-sticker-mule-logo-dark-stacked.png',
-        },
-        {
-          id: 2,
-          company: 'Google',
-          position: 'Sr. Software Engineer',
-          location: 'San Francisco',
-          logo:
-            "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckphIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--1a26026cec79788af423dad61c5fff565c9786fc/we're_hiring_shared_image_3.jpg",
-        },
-      ],
-    };
+  state = {
+    currentUser: null,
+    location: '',
+    description: '',
+  };
+
+  componentDidMount() {
+    const { currentUser } = f.auth();
+    this.setState({ currentUser });
   }
 
   onSubmit() {
-    console.log('Going to make a fetch request Git Hub');
-    fetch();
+    const { description, location } = this.state;
+    fetch(
+      `https://jobs.github.com/positions.json?description=${description}&location=${location}`
+    )
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
   }
 
   render() {
@@ -56,63 +52,32 @@ export default class Home extends React.Component {
           <Text>Jobs</Text>
         </View>
         <View style={styles.searchBar}>
-          <TextInput
-            style={styles.searchFeild}
-            placeholder="Position..."
-            onSubmitEditing={this.onSubmit}
-          />
-          <TouchableOpacity style={styles.buttonContainer}>
-            <Text style={{ color: '#fff' }}>Search</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.searchBar}>
-          <TextInput
-            style={styles.searchFeild}
-            placeholder="Location..."
-            onSubmitEditing={this.onSubmit}
-          />
-          <TouchableOpacity style={styles.buttonContainer}>
-            <Text style={{ color: '#fff' }}>Search</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              marginLeft: 20,
+              justifyContent: 'space-around',
+              flexDirection: 'column',
+            }}
+          >
+            <TextInput
+              styl={styles.jobInput}
+              autoCapitalize="none"
+              placeholder="Description..."
+              onChangeText={description => this.setState({ description })}
+              value={this.state.description}
+            />
+            <TextInput
+              styl={styles.jobInput}
+              autoCapitalize="none"
+              placeholder="Location..."
+              onChangeText={location => this.setState({ location })}
+              value={this.state.location}
+            />
+          </View>
+          <Button title="Start the Hunt" onPress={() => this.onSubmit} />
         </View>
 
-        <FlatList
-          style={{ flex: 1 }}
-          data={this.state.jobposts}
-          keyExtractor={(item, id) => id.toString()}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                justifyContent: 'space-evenly',
-                alignItems: 'center',
-                flexDirection: 'row',
-                paddingVertical: 10,
-              }}
-            >
-              <View>
-                <Image
-                  source={{
-                    uri: item.logo,
-                  }}
-                  style={{
-                    marginLeft: 5,
-                    width: 100,
-                    height: 100,
-                    borderRadius: 50,
-                  }}
-                />
-              </View>
-
-              <View style={{ marginRight: 10 }}>
-                <TouchableOpacity>
-                  <Text>{item.position}</Text>
-                  <Text>{item.company}</Text>
-                  <Text>{item.location}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
-        />
+        <Jobs />
       </View>
     );
   }
@@ -131,20 +96,18 @@ const styles = StyleSheet.create({
   },
 
   searchBar: {
-    marginBottom: 20,
+    backgroundColor: 'orange',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
-
-    borderWidth: 1,
-    borderColor: '#7a42f4',
+    paddingVertical: 10,
+    marginBottom: 20,
   },
-  searchFeild: {
-    width: 5,
+  jobInput: {
     color: 'black',
-    flex: 1,
     padding: 28,
-
-    fontSize: 20,
-    height: 20,
+    fontSize: 25,
+    marginBottom: 30,
   },
   buttonContainer: {
     paddingHorizontal: 40,
