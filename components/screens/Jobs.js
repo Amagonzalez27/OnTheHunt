@@ -15,9 +15,9 @@ export default class Jobs extends React.Component {
     this.addToSavedJobs = this.addToSavedJobs.bind(this);
     this.addToAppliedJobs = this.addToAppliedJobs.bind(this);
   }
-  addToSavedJobs() {
+  addToSavedJobs(job) {
     // TODO: set up post request to saved
-    console.log('Sent to Saved');
+    console.log('selected job:', job);
   }
 
   addToAppliedJobs() {
@@ -64,7 +64,7 @@ export default class Jobs extends React.Component {
                 <Text>{item.location}</Text>
               </TouchableOpacity>
             </View>
-            <Button title="Save" onPress={this.addToSavedJobs} />
+            <Button title="Save" onPress={() => this.addToSavedJobs(item)} />
             <Button title="Applied" onPress={this.addToAppliedJobs} />
           </View>
         )}

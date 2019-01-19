@@ -3,18 +3,18 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
-  TouchableOpacity,
   Image,
-  TextInput,
+  TouchableOpacity,
   Button,
 } from 'react-native';
 
-import { SearchBar } from 'react-native-elements';
-
 export default class SavedJobs extends React.Component {
+  addToAppliedJobs() {
+    //TODO: add to applied list
+    console.log('Applied');
+  }
+
   render() {
-    console.log('INSIDE RENDER');
     return (
       <View style={styles.container}>
         <View
@@ -30,9 +30,46 @@ export default class SavedJobs extends React.Component {
         >
           <Text>Saved Jobs</Text>
         </View>
+
+        <View style={styles.jobContainer}>
+          <View>
+            <Image
+              source={require('../../assets/job_icon.png')}
+              style={{
+                marginLeft: 5,
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+              }}
+            />
+          </View>
+
+          <View style={{ marginRight: 10 }}>
+            <TouchableOpacity>
+              <Text>Position</Text>
+              <Text>Compan</Text>
+              <Text>Location</Text>
+            </TouchableOpacity>
+          </View>
+          <Button title="Applied" onPress={this.addToAppliedJobs} />
+        </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  jobContainer: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingVertical: 10,
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+});

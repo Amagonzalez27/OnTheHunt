@@ -10,13 +10,13 @@ import Loading from './components/screens/Loading';
 import SignUp from './components/screens/SignUp';
 import Login from './components/screens/Login';
 import Home from './components/screens/Home';
-import SaveJobs from './components/screens/SavedJobs';
+import SavedJobs from './components/screens/SavedJobs';
 import Applied from './components/screens/Applied';
 
 // create bottom tabs
 const TabStack = createBottomTabNavigator({
   Jobs: { screen: Home },
-  Save: { screen: SaveJobs },
+  Saved: { screen: SavedJobs },
   Applied: { screen: Applied },
 });
 
