@@ -7,10 +7,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  Button,
 } from 'react-native';
-
-import { SearchBar } from 'react-native-elements';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -134,12 +131,8 @@ const styles = StyleSheet.create({
   },
 
   searchBar: {
-    // flex: 1,
     marginBottom: 20,
-    // justifyContent: 'space-evenly',
-    // alignItems: 'center',
     flexDirection: 'row',
-    // paddingVertical: 10,
 
     borderWidth: 1,
     borderColor: '#7a42f4',
