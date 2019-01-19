@@ -1,13 +1,27 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
-import { f } from '../../config/firebase_config';
+import { f, database } from '../../config/firebase_config';
 
 export default class SignUp extends React.Component {
-  state = { email: '', password: '', errorMessage: null };
+  state = { name: '', email: '', password: '', errorMessage: null };
+
+  createUser = (userObj, email, name) => {
+    const user = {
+      name,
+      email,
+    };
+
+    database
+      .ref('users')
+      .child(userObj.uid)
+      .set(user);
+  };
 
   handleSignUp = () => {
+    const { name, email, password } = this.state;
     f.auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .createUserWithEmailAndPassword(email, password)
+      .then(userObj => this.createUser(userObj.user, email, name))
       .then(() => this.props.navigation.navigate('Main'))
       .catch(error => this.setState({ errorMessage: error.errorMessage }));
   };
@@ -19,6 +33,13 @@ export default class SignUp extends React.Component {
         {this.state.errorMessage && (
           <Text style={{ color: 'red' }}>{this.state.errorMessage}</Text>
         )}
+        <TextInput
+          placeholder="Name"
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={name => this.setState({ name })}
+          value={this.state.name}
+        />
         <TextInput
           placeholder="Email"
           autoCapitalize="none"
