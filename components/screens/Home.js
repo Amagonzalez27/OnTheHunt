@@ -1,24 +1,20 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  Button,
-} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 import { f } from '../../config/firebase_config';
 import Jobs from './Jobs';
 
 export default class Home extends React.Component {
-  state = {
-    currentUser: null,
-    location: '',
-    description: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: null,
+      location: '',
+      description: '',
+      jobs: [],
+    };
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
   componentDidMount() {
     const { currentUser } = f.auth();
@@ -27,11 +23,17 @@ export default class Home extends React.Component {
 
   onSubmit() {
     const { description, location } = this.state;
-    fetch(
-      `https://jobs.github.com/positions.json?description=${description}&location=${location}`
-    )
+
+    let url = `https://jobs.github.com/positions.json?description=${description}&location=${location}`;
+    fetch(url)
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        this.setState({
+          description: '',
+          location: '',
+          jobs: data,
+        });
+      })
       .catch(error => console.log(error));
   }
 
@@ -74,10 +76,9 @@ export default class Home extends React.Component {
               value={this.state.location}
             />
           </View>
-          <Button title="Start the Hunt" onPress={() => this.onSubmit} />
+          <Button title="Start the Hunt" onPress={this.onSubmit} />
         </View>
-
-        <Jobs />
+        <Jobs jobs={this.state.jobs} />
       </View>
     );
   }

@@ -10,27 +10,11 @@ import {
 } from 'react-native';
 
 export default class Jobs extends React.Component {
-  state = {
-    jobposts: [
-      {
-        id: 1,
-        company: 'Amazon',
-        position: 'Sr. Software Engineer',
-        location: 'New York',
-        logo:
-          'https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZ0pjIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--35f6201e9066caf57547d2dd9d911004edfa8437/01-sticker-mule-logo-dark-stacked.png',
-      },
-      {
-        id: 2,
-        company: 'Google',
-        position: 'Sr. Software Engineer',
-        location: 'San Francisco',
-        logo:
-          "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBckphIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--1a26026cec79788af423dad61c5fff565c9786fc/we're_hiring_shared_image_3.jpg",
-      },
-    ],
-  };
-
+  constructor(props) {
+    super(props);
+    this.addToSavedJobs = this.addToSavedJobs.bind(this);
+    this.addToAppliedJobs = this.addToAppliedJobs.bind(this);
+  }
   addToSavedJobs() {
     // TODO: set up post request to saved
     console.log('Sent to Saved');
@@ -45,22 +29,32 @@ export default class Jobs extends React.Component {
     return (
       <FlatList
         style={{ flex: 1 }}
-        data={this.state.jobposts}
+        data={this.props.jobs}
         keyExtractor={(item, id) => id.toString()}
         renderItem={({ item }) => (
           <View style={styles.jobContainer}>
             <View>
-              <Image
-                source={{
-                  uri: item.logo,
-                }}
-                style={{
-                  marginLeft: 5,
-                  width: 50,
-                  height: 50,
-                  borderRadius: 25,
-                }}
-              />
+              {!item.company_logo ? (
+                <Image
+                  source={require('../../assets/job_icon.png')}
+                  style={{
+                    marginLeft: 5,
+                    width: 50,
+                    height: 50,
+                    borderRadius: 25,
+                  }}
+                />
+              ) : (
+                <Image
+                  source={{ uri: item.company_logo }}
+                  style={{
+                    marginLeft: 5,
+                    width: 50,
+                    height: 50,
+                    borderRadius: 25,
+                  }}
+                />
+              )}
             </View>
 
             <View style={{ marginRight: 10 }}>
@@ -70,8 +64,8 @@ export default class Jobs extends React.Component {
                 <Text>{item.location}</Text>
               </TouchableOpacity>
             </View>
-            <Button title="Save" onPress={() => this.addToSavedJobs} />
-            <Button title="Applied" onPress={() => this.addToAppliedJobs} />
+            <Button title="Save" onPress={this.addToSavedJobs} />
+            <Button title="Applied" onPress={this.addToAppliedJobs} />
           </View>
         )}
       />
