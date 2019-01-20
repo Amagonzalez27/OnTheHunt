@@ -11,7 +11,7 @@ import {
 import { database } from '../../config/firebase_config';
 import { connect } from 'react-redux';
 
-import { fetchUsersJobs } from '../../store';
+import { fetchUsersJobs, addToJobList } from '../../store';
 
 class Jobs extends React.Component {
   constructor(props) {
@@ -21,13 +21,16 @@ class Jobs extends React.Component {
   }
   addToSavedJobs(job) {
     const userId = this.props.currentUser.uid;
+
     const jobObj = {
       ...job,
       candidate: userId,
       saved: true, // when user selects save
       applied: false,
     };
+
     // add a job to user's file
+    this.props.addMyJob(jobObj);
     database
       .ref('jobs')
       .child(userId)
@@ -44,6 +47,7 @@ class Jobs extends React.Component {
       applied: true,
     };
     // add a job to user's file
+    this.props.addMyJob(jobObj);
     database
       .ref('jobs')
       .child(userId)
@@ -123,6 +127,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  addMyJob: job => dispatch(addToJobList(job)),
   getMyJobs: userId => dispatch(fetchUsersJobs(userId)),
 });
 

@@ -4,21 +4,16 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { f, auth } from '../../config/firebase_config';
 import Jobs from './Jobs';
 
-import {
-  getUser,
-  fetchJobs,
-  changeLocation,
-  changeDescription,
-  fetchUsersJobs,
-} from '../../store';
+import { getUser, fetchJobs, fetchUsersJobs } from '../../store';
 import { connect } from 'react-redux';
 
 class Home extends React.Component {
+  state = { description: '', location: '' };
+
   async componentDidMount() {
     try {
       const { currentUser } = f.auth();
       await this.props.getUserInfo(currentUser);
-      console.log('TRYING TO FETCH USERS LIST OF JOBS:', currentUser.uid);
       await this.props.getMyJobs(currentUser.uid);
     } catch (error) {
       console.log('Error finding user:', error);
@@ -61,22 +56,26 @@ class Home extends React.Component {
               styl={styles.jobInput}
               autoCapitalize="none"
               placeholder="Description..."
-              onChangeText={text => this.props.changeDesc(text)}
-              value={this.props.description}
+              onChangeText={text => this.setState({ description: text })}
+              value={this.state.description}
             />
             <TextInput
               styl={styles.jobInput}
               autoCapitalize="none"
               placeholder="Location..."
-              onChangeText={text => this.props.changeLoc}
-              value={this.props.location}
+              onChangeText={text => this.setState({ location: text })}
+              value={this.state.location}
             />
           </View>
           <Button
             title="Start the Hunt"
-            onPress={() =>
-              this.props.getJobs(this.props.description, this.props.location)
-            }
+            onPress={() => {
+              this.props.getJobs(this.state.description, this.state.location);
+              this.setState({
+                description: '',
+                location: '',
+              });
+            }}
           />
         </View>
         <Jobs jobs={this.props.jobs} />
@@ -121,16 +120,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   currentUser: state.currentUser,
   jobs: state.jobs,
-  location: '',
-  description: '',
 });
 
 const mapDisptachToProps = dispatch => ({
   getUserInfo: userId => dispatch(getUser(userId)),
   getJobs: (description, location) =>
     dispatch(fetchJobs(description, location)),
-  changeLoc: text => dispatch(changeLocation(text)),
-  changeDesc: text => dispatch(changeDescription(text)),
   getMyJobs: id => dispatch(fetchUsersJobs(id)),
 });
 

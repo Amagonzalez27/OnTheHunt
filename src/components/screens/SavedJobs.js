@@ -9,20 +9,31 @@ import {
   FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchUsersJobs } from '../../store';
+import { fetchUsersJobs, addToJobList } from '../../store';
+import { database } from '../../config/firebase_config';
 
 class SavedJobs extends React.Component {
-  async componentDidMount() {
+  addToAppliedJobs(job) {
     const userId = this.props.currentUser.uid;
-    await this.props.getMyJobs(userId);
-  }
-  addToAppliedJobs() {
-    //TODO: add to applied list
-    console.log('Applied');
+    const jobObj = {
+      ...job,
+      candidate: userId,
+      saved: false,
+      applied: true,
+    };
+    this.props.addMyJob(jobObj);
+    // add a job to user's file
+    database
+      .ref('jobs')
+      .child(userId)
+      .child(job.id)
+      .set(jobObj);
   }
 
   render() {
-    console.log('THE INTENDED ARRAY OF JOBS:', this.props.selectedJobs);
+    const usersSavedJobs = Object.keys(this.props.selectedJobs)
+      .map(key => this.props.selectedJobs[key])
+      .filter(job => job.saved);
     return (
       <View style={styles.container}>
         <View
@@ -38,11 +49,10 @@ class SavedJobs extends React.Component {
         >
           <Text>Saved Jobs</Text>
         </View>
-
         <FlatList
           style={{ flex: 1 }}
-          data={this.props.selectedJobs}
-          keyExtractor={(item, id) => item.id.toString()}
+          data={usersSavedJobs}
+          keyExtractor={(item, id) => id.toString()}
           renderItem={({ item }) => (
             <View style={styles.jobContainer}>
               <View>
@@ -76,6 +86,7 @@ class SavedJobs extends React.Component {
                   <Text>{item.location}</Text>
                 </TouchableOpacity>
               </View>
+
               <Button
                 title="Applied"
                 onPress={() => this.addToAppliedJobs(item)}
@@ -102,6 +113,9 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderWidth: 1,
   },
+  container: {
+    flex: 1,
+  },
 });
 
 const mapStateToProps = state => ({
@@ -111,6 +125,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getMyJobs: userId => dispatch(fetchUsersJobs(userId)),
+  addMyJob: job => dispatch(addToJobList(job)),
 });
 
 export default connect(
