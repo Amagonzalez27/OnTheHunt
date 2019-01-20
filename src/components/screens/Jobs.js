@@ -8,21 +8,47 @@ import {
   Image,
   Button,
 } from 'react-native';
+import { database } from '../../config/firebase_config';
+import { connect } from 'react-redux';
 
-export default class Jobs extends React.Component {
+import { fetchUsersJobs } from '../../store';
+
+class Jobs extends React.Component {
   constructor(props) {
     super(props);
     this.addToSavedJobs = this.addToSavedJobs.bind(this);
     this.addToAppliedJobs = this.addToAppliedJobs.bind(this);
   }
   addToSavedJobs(job) {
-    // TODO: set up post request to saved
-    console.log('selected job:', job);
+    const userId = this.props.currentUser.uid;
+    const jobObj = {
+      ...job,
+      candidate: userId,
+      saved: true, // when user selects save
+      applied: false,
+    };
+    // add a job to user's file
+    database
+      .ref('jobs')
+      .child(userId)
+      .child(job.id)
+      .set(jobObj);
   }
 
-  addToAppliedJobs() {
-    // TODO: set up post request to applied
-    console.log('Sent to Applied');
+  addToAppliedJobs(job) {
+    const userId = this.props.currentUser.uid;
+    const jobObj = {
+      ...job,
+      candidate: userId,
+      saved: false,
+      applied: true,
+    };
+    // add a job to user's file
+    database
+      .ref('jobs')
+      .child(userId)
+      .child(job.id)
+      .set(jobObj);
   }
 
   render() {
@@ -36,7 +62,7 @@ export default class Jobs extends React.Component {
             <View>
               {!item.company_logo ? (
                 <Image
-                  source={require('../../assets/job_icon.png')}
+                  source={require('../../../assets/job_icon.png')}
                   style={{
                     marginLeft: 5,
                     width: 50,
@@ -65,7 +91,10 @@ export default class Jobs extends React.Component {
               </TouchableOpacity>
             </View>
             <Button title="Save" onPress={() => this.addToSavedJobs(item)} />
-            <Button title="Applied" onPress={this.addToAppliedJobs} />
+            <Button
+              title="Applied"
+              onPress={() => this.addToAppliedJobs(item)}
+            />
           </View>
         )}
       />
@@ -88,3 +117,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
+
+const mapStateToProps = state => ({
+  currentUser: state.currentUser,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getMyJobs: userId => dispatch(fetchUsersJobs(userId)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Jobs);

@@ -3,10 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
   TouchableOpacity,
   Image,
-  TextInput,
   Button,
 } from 'react-native';
 
@@ -34,7 +32,7 @@ export default class SavedJobs extends React.Component {
         <View style={styles.jobContainer}>
           <View>
             <Image
-              source={require('../../assets/job_icon.png')}
+              source={require('../../../assets/job_icon.png')}
               style={{
                 marginLeft: 5,
                 width: 50,

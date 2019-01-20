@@ -1,3 +1,7 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './src/store';
+
 import {
   createSwitchNavigator,
   createStackNavigator,
@@ -6,12 +10,12 @@ import {
 } from 'react-navigation';
 
 // import the different screens
-import Loading from './components/screens/Loading';
-import SignUp from './components/screens/SignUp';
-import Login from './components/screens/Login';
-import Home from './components/screens/Home';
-import SavedJobs from './components/screens/SavedJobs';
-import Applied from './components/screens/Applied';
+import Loading from './src/components/screens/Loading';
+import SignUp from './src/components/screens/SignUp';
+import Login from './src/components/screens/Login';
+import Home from './src/components/screens/Home';
+import SavedJobs from './src/components/screens/SavedJobs';
+import Applied from './src/components/screens/Applied';
 
 // create bottom tabs
 const TabStack = createBottomTabNavigator({
@@ -37,7 +41,7 @@ const AuthStack = createStackNavigator({
   Login,
 });
 
-export default createAppContainer(
+const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       Loading,
@@ -50,3 +54,13 @@ export default createAppContainer(
     }
   )
 );
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
+  }
+}
