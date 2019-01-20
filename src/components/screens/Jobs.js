@@ -89,7 +89,7 @@ class Jobs extends React.Component {
 
             <View style={{ marginRight: 10 }}>
               <TouchableOpacity>
-                <Text>{item.position}</Text>
+                <Text>{item.title}</Text>
                 <Text>{item.company}</Text>
                 <Text>{item.location}</Text>
               </TouchableOpacity>
