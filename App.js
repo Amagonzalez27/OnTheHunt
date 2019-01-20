@@ -29,6 +29,7 @@ const AppStack = createStackNavigator(
   {
     Home: { screen: TabStack },
   },
+
   {
     initialRouteName: 'Home',
     mode: 'modal',
@@ -36,10 +37,16 @@ const AppStack = createStackNavigator(
   }
 );
 
-const AuthStack = createStackNavigator({
-  SignUp,
-  Login,
-});
+const AuthStack = createStackNavigator(
+  {
+    SignUp,
+    Login,
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(

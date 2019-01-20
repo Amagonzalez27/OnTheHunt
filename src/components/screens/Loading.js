@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { f } from '../../config/firebase_config';
-
 export default class Loading extends React.Component {
   componentDidMount() {
     f.auth().onAuthStateChanged(user => {
