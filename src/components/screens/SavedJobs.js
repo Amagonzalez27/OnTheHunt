@@ -34,7 +34,7 @@ class SavedJobs extends React.Component {
       .map(key => this.props.selectedJobs[key])
       .filter(job => job.saved);
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#e0e0e0' }}>
         <View style={styles.header}>
           <View style={{ justifyContent: 'center', paddingHorizontal: 150 }}>
             <Text style={styles.text}>Saved Jobs</Text>
@@ -48,6 +48,7 @@ class SavedJobs extends React.Component {
                 color: '#fc5c65',
                 textAlign: 'center',
                 marginHorizontal: 10,
+                fontWeight: 'bold',
               }}
             >
               Head back to Jobs to start saving

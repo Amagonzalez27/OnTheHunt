@@ -30,7 +30,7 @@ class Applied extends React.Component {
       .filter(job => job.applied);
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#e0e0e0' }}>
         <View style={styles.header}>
           <View style={{ justifyContent: 'center', paddingHorizontal: 150 }}>
             <Text style={styles.text}>Applied Jobs</Text>
@@ -44,6 +44,7 @@ class Applied extends React.Component {
                 color: '#fc5c65',
                 textAlign: 'center',
                 marginHorizontal: 10,
+                fontWeight: 'bold',
               }}
             >
               Head back to Jobs to start tracking the jobs you've applied to!

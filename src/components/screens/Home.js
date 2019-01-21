@@ -117,6 +117,7 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#e0e0e0',
   },
   header: {
     backgroundColor: '#2c3e50',
