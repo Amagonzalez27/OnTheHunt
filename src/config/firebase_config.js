@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { FB_API } from 'react-native-dotenv';
 
 // API details
 
