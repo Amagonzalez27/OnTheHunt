@@ -1,11 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 
 import { f, auth } from '../../config/firebase_config';
 import Jobs from './Jobs';
 
 import { getUser, fetchJobs, fetchUsersJobs } from '../../store';
 import { connect } from 'react-redux';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Logo from '../../../assets/on_the_hunt_logo.png';
+
+const { width: WIDTH } = Dimensions.get('window');
 
 class Home extends React.Component {
   state = { description: '', location: '' };
@@ -30,20 +42,24 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            height: 70,
-            paddingTop: 30,
-            backgroundColor: 'white',
-            borderColor: 'lightgrey',
-            borderBottomWidth: 0.5,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text>Jobs</Text>
-          <Button title="SignOut" onPress={this.signOut.bind(this)} />
+        <View style={styles.header}>
+          <View style={{ justifyContent: 'center', paddingHorizontal: 150 }}>
+            <Text style={styles.text}>Jobs</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.btnSignout}
+            onPress={this.signOut.bind(this)}
+          >
+            <View style={{ justifyContent: 'flex-end' }}>
+              <Ionicons
+                name="ios-log-out"
+                size={26}
+                color="rgba(255, 255, 255, 0.7)"
+              />
+            </View>
+          </TouchableOpacity>
         </View>
+
         <View style={styles.searchBar}>
           <View
             style={{
@@ -52,23 +68,29 @@ class Home extends React.Component {
               flexDirection: 'column',
             }}
           >
-            <TextInput
-              styl={styles.jobInput}
-              autoCapitalize="none"
-              placeholder="Description..."
-              onChangeText={text => this.setState({ description: text })}
-              value={this.state.description}
-            />
-            <TextInput
-              styl={styles.jobInput}
-              autoCapitalize="none"
-              placeholder="Location..."
-              onChangeText={text => this.setState({ location: text })}
-              value={this.state.location}
-            />
+            <View style={styles.input}>
+              <TextInput
+                styl={styles.jobInput}
+                autoCapitalize="none"
+                placeholder="Description..."
+                placeholderTextColor="rgba(33,33,33,0.7)"
+                onChangeText={text => this.setState({ description: text })}
+                value={this.state.description}
+              />
+            </View>
+            <View style={styles.input}>
+              <TextInput
+                styl={styles.jobInput}
+                autoCapitalize="none"
+                placeholderTextColor="rgba(33,33,33,0.7)"
+                placeholder="Location..."
+                onChangeText={text => this.setState({ location: text })}
+                value={this.state.location}
+              />
+            </View>
           </View>
-          <Button
-            title="Start the Hunt"
+          <TouchableOpacity
+            style={styles.buttonContainer}
             onPress={() => {
               this.props.getJobs(this.state.description, this.state.location);
               this.setState({
@@ -76,9 +98,17 @@ class Home extends React.Component {
                 location: '',
               });
             }}
-          />
+          >
+            <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>
+              Hunt
+            </Text>
+          </TouchableOpacity>
         </View>
-        <Jobs jobs={this.props.jobs} />
+        {this.props.jobs.length ? (
+          <Jobs jobs={this.props.jobs} />
+        ) : (
+          <Image style={styles.logo} source={Logo} />
+        )}
       </View>
     );
   }
@@ -88,32 +118,64 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    borderColor: 'red',
-    borderWidth: 1,
+  header: {
+    backgroundColor: '#2c3e50',
+    height: 70,
+    paddingTop: 30,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  text: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 17,
+    textAlign: 'center',
+  },
+  btnSignout: {
+    justifyContent: 'flex-end',
+    flex: 0,
   },
 
   searchBar: {
-    backgroundColor: 'orange',
-    justifyContent: 'space-between',
+    backgroundColor: '#2c3e50',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: 10,
     marginBottom: 20,
+  },
+  input: {
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.7)',
+    backgroundColor: '#F8FFF8',
+    borderRadius: 25,
+    width: WIDTH - 150,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    fontSize: 16,
   },
   jobInput: {
     color: 'black',
-    padding: 28,
+
     fontSize: 25,
     marginBottom: 30,
+    alignSelf: 'flex-start',
   },
   buttonContainer: {
-    paddingHorizontal: 40,
-    backgroundColor: '#7a42f4',
-    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 100,
+    borderColor: '#fc5c65',
+    backgroundColor: '#fc5c65',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 40,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+  },
+  logo: {
+    width: 265,
+    height: 265,
+    alignSelf: 'center',
+    marginVertical: 150,
   },
 });
 
