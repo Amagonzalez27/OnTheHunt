@@ -94,7 +94,6 @@ class Jobs extends React.Component {
 
                 <View style={{ flex: 2 }}>
                   <TouchableOpacity
-                    style={styles.jobDetail}
                     onPress={() =>
                       this.props.navigation.navigate('Detail', {
                         params: {
@@ -170,7 +169,6 @@ const styles = StyleSheet.create({
   },
   jobDetailContainer: {
     flexDirection: 'row',
-    // justifyContent: 'space-around',
     marginBottom: 5,
   },
   jobLogo: {
