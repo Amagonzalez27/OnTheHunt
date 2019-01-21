@@ -93,7 +93,25 @@ class Jobs extends React.Component {
                 </View>
 
                 <View style={{ flex: 2 }}>
-                  <TouchableOpacity style={styles.jobDetail}>
+                  <TouchableOpacity
+                    style={styles.jobDetail}
+                    onPress={() =>
+                      this.props.navigation.navigate('Detail', {
+                        params: {
+                          title: item.title,
+                          company: item.company,
+                          description: item.description,
+                          location: item.location,
+                          url: item.url,
+                          howToapply: item.how_to_apply,
+                          posted: item.created_at,
+                          companyUrl: item.company_url,
+                          type: item.type,
+                          logo: item.company_logo,
+                        },
+                      })
+                    }
+                  >
                     <Text>{title}</Text>
                     <Text>{company}</Text>
                     <Text>{item.location}</Text>

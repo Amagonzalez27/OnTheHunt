@@ -105,7 +105,7 @@ class Home extends React.Component {
           </TouchableOpacity>
         </View>
         {this.props.jobs.length ? (
-          <Jobs jobs={this.props.jobs} />
+          <Jobs jobs={this.props.jobs} navigation={this.props.navigation} />
         ) : (
           <Image style={styles.logo} source={Logo} />
         )}

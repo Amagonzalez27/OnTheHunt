@@ -16,6 +16,7 @@ import Login from './src/components/screens/Login';
 import Home from './src/components/screens/Home';
 import SavedJobs from './src/components/screens/SavedJobs';
 import Applied from './src/components/screens/Applied';
+import JobDetail from './src/components/screens/JobDetail';
 
 // create bottom tabs
 const TabStack = createBottomTabNavigator(
@@ -42,6 +43,7 @@ const TabStack = createBottomTabNavigator(
 const AppStack = createStackNavigator(
   {
     Home: { screen: TabStack },
+    Detail: { screen: JobDetail },
   },
 
   {
