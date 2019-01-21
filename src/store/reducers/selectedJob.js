@@ -41,7 +41,7 @@ export const fetchUsersJobs = userId => {
   };
 };
 
-export const selectedJob = (state = {}, action) => {
+export const usersSelectedJobs = (state = {}, action) => {
   switch (action.type) {
     case GET_USERS_JOBS:
       return { ...state, ...action.jobs };
