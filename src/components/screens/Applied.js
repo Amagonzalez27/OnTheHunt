@@ -31,18 +31,10 @@ class Applied extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            height: 70,
-            paddingTop: 30,
-            backgroundColor: 'white',
-            borderColor: 'lightgrey',
-            borderBottomWidth: 0.5,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text>Applied Jobs</Text>
+        <View style={styles.header}>
+          <View style={{ justifyContent: 'center', paddingHorizontal: 150 }}>
+            <Text style={styles.text}>Applied Jobs</Text>
+          </View>
         </View>
 
         <FlatList
@@ -51,39 +43,62 @@ class Applied extends React.Component {
           keyExtractor={(item, id) => id.toString()}
           renderItem={({ item }) => (
             <View style={styles.jobContainer}>
-              <View>
-                {!item.company_logo ? (
-                  <Image
-                    source={require('../../../assets/job_icon.png')}
-                    style={{
-                      marginLeft: 5,
-                      width: 50,
-                      height: 50,
-                      borderRadius: 25,
-                    }}
-                  />
-                ) : (
-                  <Image
-                    source={{ uri: item.company_logo }}
-                    style={{
-                      marginLeft: 5,
-                      width: 50,
-                      height: 50,
-                      borderRadius: 25,
-                    }}
-                  />
-                )}
-              </View>
+              <View style={styles.jobDetails}>
+                <View style={styles.jobLogo}>
+                  {!item.company_logo ? (
+                    <Image
+                      source={require('../../../assets/job_icon.png')}
+                      style={{
+                        marginLeft: 5,
+                        width: 50,
+                        height: 50,
+                        borderRadius: 25,
+                      }}
+                    />
+                  ) : (
+                    <Image
+                      source={{ uri: item.company_logo }}
+                      style={{
+                        marginLeft: 5,
+                        width: 50,
+                        height: 50,
+                        borderRadius: 25,
+                      }}
+                    />
+                  )}
+                </View>
 
-              <View style={{ marginRight: 10 }}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('Detail', {
+                      params: {
+                        title: item.title,
+                        company: item.company,
+                        description: item.description,
+                        location: item.location,
+                        url: item.url,
+                        howToapply: item.how_to_apply,
+                        posted: item.created_at,
+                        companyUrl: item.company_url,
+                        type: item.type,
+                        logo: item.company_logo,
+                      },
+                    })
+                  }
+                >
                   <Text>{item.position}</Text>
                   <Text>{item.company}</Text>
                   <Text>{item.location}</Text>
                 </TouchableOpacity>
               </View>
-
-              <Button title="Remove" onPress={() => this.removeJob(item.id)} />
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => this.removeJob(item.id)}
+                >
+                  <Text style={styles.textBtn}>Remove</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         />
@@ -93,21 +108,52 @@ class Applied extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  jobContainer: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingVertical: 10,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    borderColor: 'red',
-    borderWidth: 1,
-  },
   container: {
     flex: 1,
+  },
+  header: {
+    backgroundColor: '#2c3e50',
+    height: 70,
+    paddingTop: 30,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  text: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 17,
+    textAlign: 'center',
+  },
+  jobContainer: {
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: '#bdbdbd',
+    backgroundColor: '#eeeeee',
+  },
+  jobDetails: {
+    flexDirection: 'row',
+    width: 250,
+  },
+  jobLogo: {
+    justifyContent: 'flex-start',
+    width: 80,
+  },
+  buttonsContainer: {
+    marginTop: 10,
+    marginRight: 10,
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: '#fc5c65',
+    backgroundColor: '#fc5c65',
+    borderRadius: 25,
+    paddingVertical: 10,
+    width: 100,
+  },
+  textBtn: {
+    textAlign: 'center',
   },
 });
 

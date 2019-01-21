@@ -5,12 +5,11 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Button,
   FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchUsersJobs, addToJobList } from '../../store';
 import { database } from '../../config/firebase_config';
+import { fetchUsersJobs, addToJobList } from '../../store';
 
 class SavedJobs extends React.Component {
   addToAppliedJobs(job) {
@@ -41,6 +40,7 @@ class SavedJobs extends React.Component {
             <Text style={styles.text}>Saved Jobs</Text>
           </View>
         </View>
+
         <FlatList
           style={{ flex: 1 }}
           data={usersSavedJobs}
@@ -73,7 +73,6 @@ class SavedJobs extends React.Component {
                 </View>
 
                 <TouchableOpacity
-                  style={{}}
                   onPress={() =>
                     this.props.navigation.navigate('Detail', {
                       params: {
