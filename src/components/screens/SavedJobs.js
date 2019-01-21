@@ -34,23 +34,15 @@ class SavedJobs extends React.Component {
       .map(key => this.props.selectedJobs[key])
       .filter(job => job.saved);
     return (
-      <View style={{ flex: 1, backgroundColor: '#e0e0e0' }}>
+      <View style={styles.body}>
         <View style={styles.header}>
-          <View style={{ justifyContent: 'center', paddingHorizontal: 150 }}>
+          <View style={styles.headerTextContainer}>
             <Text style={styles.text}>Saved Jobs</Text>
           </View>
         </View>
         {usersSavedJobs.length === 0 ? (
           <View style={styles.container}>
-            <Text
-              style={{
-                fontSize: 18,
-                color: '#fc5c65',
-                textAlign: 'center',
-                marginHorizontal: 10,
-                fontWeight: 'bold',
-              }}
-            >
+            <Text style={styles.message}>
               Head back to Jobs to start saving
             </Text>
           </View>
@@ -65,23 +57,15 @@ class SavedJobs extends React.Component {
                   <View style={styles.jobLogo}>
                     {!item.company_logo ? (
                       <Image
-                        source={require('../../../assets/job_icon.png')}
-                        style={{
-                          marginLeft: 5,
-                          width: 60,
-                          height: 60,
-                          borderRadius: 30,
-                        }}
+                        source={require('../../../assets/on_the_hunt_logo.png')}
+                        resizeMode="contain"
+                        style={styles.onTheHuntLogo}
                       />
                     ) : (
                       <Image
                         source={{ uri: item.company_logo }}
-                        style={{
-                          marginLeft: 5,
-                          width: 60,
-                          height: 60,
-                          borderRadius: 30,
-                        }}
+                        resizeMode="contain"
+                        style={styles.hasCompanyLogo}
                       />
                     )}
                   </View>
@@ -128,6 +112,7 @@ class SavedJobs extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  body: { flex: 1, backgroundColor: '#e0e0e0' },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -141,12 +126,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
   },
+  headerTextContainer: { justifyContent: 'center', paddingHorizontal: 150 },
   text: {
     color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 17,
     textAlign: 'center',
   },
-
+  message: {
+    fontSize: 18,
+    color: '#fc5c65',
+    textAlign: 'center',
+    marginHorizontal: 10,
+    fontWeight: 'bold',
+  },
   jobContainer: {
     justifyContent: 'space-evenly',
     flexDirection: 'row',
@@ -178,6 +170,18 @@ const styles = StyleSheet.create({
   jobLogo: {
     justifyContent: 'flex-start',
     width: 80,
+  },
+  onTheHuntLogo: {
+    marginLeft: 5,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+  },
+  hasCompanyLogo: {
+    marginLeft: 5,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
   },
 });
 

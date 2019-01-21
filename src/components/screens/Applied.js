@@ -5,13 +5,13 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Button,
   FlatList,
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import { database } from '../../config/firebase_config';
 import { deleteJob, fetchUsersJobs } from '../../store';
+import Progress from './Progress';
 
 class Applied extends React.Component {
   removeJob(jobId) {
@@ -30,23 +30,15 @@ class Applied extends React.Component {
       .filter(job => job.applied);
 
     return (
-      <View style={{ flex: 1, backgroundColor: '#e0e0e0' }}>
+      <View style={styles.body}>
         <View style={styles.header}>
-          <View style={{ justifyContent: 'center', paddingHorizontal: 150 }}>
+          <View style={styles.headerTextContainer}>
             <Text style={styles.text}>Applied Jobs</Text>
           </View>
         </View>
         {usersAppliedJobs.length === 0 ? (
           <View style={styles.container}>
-            <Text
-              style={{
-                fontSize: 18,
-                color: '#fc5c65',
-                textAlign: 'center',
-                marginHorizontal: 10,
-                fontWeight: 'bold',
-              }}
-            >
+            <Text style={styles.message}>
               Head back to Jobs to start tracking the jobs you've applied to!
             </Text>
           </View>
@@ -55,62 +47,59 @@ class Applied extends React.Component {
             data={usersAppliedJobs}
             keyExtractor={(item, id) => id.toString()}
             renderItem={({ item }) => (
-              <View style={styles.jobContainer}>
-                <View style={styles.jobDetails}>
-                  <View style={styles.jobLogo}>
-                    {!item.company_logo ? (
-                      <Image
-                        source={require('../../../assets/job_icon.png')}
-                        style={{
-                          marginLeft: 5,
-                          width: 50,
-                          height: 50,
-                          borderRadius: 25,
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        source={{ uri: item.company_logo }}
-                        style={{
-                          marginLeft: 5,
-                          width: 50,
-                          height: 50,
-                          borderRadius: 25,
-                        }}
-                      />
-                    )}
-                  </View>
+              <View>
+                <View style={styles.jobContainer}>
+                  <View style={styles.jobDetails}>
+                    <View style={styles.jobLogo}>
+                      {!item.company_logo ? (
+                        <Image
+                          source={require('../../../assets/on_the_hunt_logo.png')}
+                          resizeMode="contain"
+                          style={styles.onTheHuntLogo}
+                        />
+                      ) : (
+                        <Image
+                          source={{ uri: item.company_logo }}
+                          resizeMode="contain"
+                          style={styles.hasCompanyLogo}
+                        />
+                      )}
+                    </View>
 
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate('Detail', {
-                        params: {
-                          title: item.title,
-                          company: item.company,
-                          description: item.description,
-                          location: item.location,
-                          url: item.url,
-                          howToapply: item.how_to_apply,
-                          posted: item.created_at,
-                          companyUrl: item.company_url,
-                          type: item.type,
-                          logo: item.company_logo,
-                        },
-                      })
-                    }
-                  >
-                    <Text>{item.position}</Text>
-                    <Text>{item.company}</Text>
-                    <Text>{item.location}</Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.props.navigation.navigate('Detail', {
+                          params: {
+                            title: item.title,
+                            company: item.company,
+                            description: item.description,
+                            location: item.location,
+                            url: item.url,
+                            howToapply: item.how_to_apply,
+                            posted: item.created_at,
+                            companyUrl: item.company_url,
+                            type: item.type,
+                            logo: item.company_logo,
+                          },
+                        })
+                      }
+                    >
+                      <Text>{item.position}</Text>
+                      <Text>{item.company}</Text>
+                      <Text>{item.location}</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.buttonsContainer}>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => this.removeJob(item.id)}
+                    >
+                      <Text style={styles.textBtn}>Remove</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <View style={styles.buttonsContainer}>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => this.removeJob(item.id)}
-                  >
-                    <Text style={styles.textBtn}>Remove</Text>
-                  </TouchableOpacity>
+                <View>
+                  <Progress />
                 </View>
               </View>
             )}
@@ -122,6 +111,14 @@ class Applied extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  message: {
+    fontSize: 18,
+    color: '#fc5c65',
+    textAlign: 'center',
+    marginHorizontal: 10,
+    fontWeight: 'bold',
+  },
+  body: { flex: 1, backgroundColor: '#e0e0e0' },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -135,6 +132,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
   },
+  headerTextContainer: { justifyContent: 'center', paddingHorizontal: 150 },
   text: {
     color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 17,
@@ -170,6 +168,18 @@ const styles = StyleSheet.create({
   },
   textBtn: {
     textAlign: 'center',
+  },
+  hasCompanyLogo: {
+    marginLeft: 5,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  onTheHuntLogo: {
+    marginLeft: 5,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
 });
 

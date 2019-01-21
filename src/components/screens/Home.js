@@ -43,14 +43,14 @@ class Home extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={{ justifyContent: 'center', paddingHorizontal: 150 }}>
+          <View style={styles.headerTextContainer}>
             <Text style={styles.text}>Jobs</Text>
           </View>
           <TouchableOpacity
             style={styles.btnSignout}
             onPress={this.signOut.bind(this)}
           >
-            <View style={{ justifyContent: 'flex-end' }}>
+            <View style={styles.signOutIcon}>
               <Ionicons
                 name="ios-log-out"
                 size={26}
@@ -61,13 +61,7 @@ class Home extends React.Component {
         </View>
 
         <View style={styles.searchBar}>
-          <View
-            style={{
-              marginLeft: 20,
-              justifyContent: 'space-around',
-              flexDirection: 'column',
-            }}
-          >
+          <View style={styles.searchBarDetails}>
             <View style={styles.input}>
               <TextInput
                 styl={styles.jobInput}
@@ -99,9 +93,7 @@ class Home extends React.Component {
               });
             }}
           >
-            <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>
-              Hunt
-            </Text>
+            <Text style={styles.btnText}>Hunt</Text>
           </TouchableOpacity>
         </View>
         {this.props.jobs.length ? (
@@ -127,6 +119,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
   },
+  headerTextContainer: { justifyContent: 'center', paddingHorizontal: 150 },
   text: {
     color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 17,
@@ -136,11 +129,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flex: 0,
   },
-
+  signOutIcon: { justifyContent: 'flex-end' },
   searchBar: {
     backgroundColor: '#2c3e50',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  searchBarDetails: {
+    marginLeft: 20,
+    justifyContent: 'space-around',
+    flexDirection: 'column',
   },
   input: {
     marginBottom: 20,
@@ -170,6 +168,8 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
+  btnText: { color: 'white', fontSize: 15, fontWeight: 'bold' },
+
   logo: {
     width: 265,
     height: 265,

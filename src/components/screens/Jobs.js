@@ -72,6 +72,7 @@ class Jobs extends React.Component {
                   {!item.company_logo ? (
                     <Image
                       source={require('../../../assets/on_the_hunt_logo.png')}
+                      resizeMode="contain"
                       style={{
                         marginLeft: 5,
                         width: 60,
@@ -82,6 +83,7 @@ class Jobs extends React.Component {
                   ) : (
                     <Image
                       source={{ uri: item.company_logo }}
+                      resizeMode="contain"
                       style={{
                         marginLeft: 5,
                         width: 60,

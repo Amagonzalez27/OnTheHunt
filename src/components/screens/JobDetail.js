@@ -31,7 +31,7 @@ export default class JobDetail extends React.Component {
         <View style={styles.container}>
           <View style={styles.header}>
             <TouchableOpacity onPress={() => goBack()}>
-              <View style={{ justifyContent: 'flex-end' }}>
+              <View style={styles.backArrowContainer}>
                 <Ionicons
                   style={styles.btngoBack}
                   name="ios-arrow-back"
@@ -40,17 +40,22 @@ export default class JobDetail extends React.Component {
                 />
               </View>
             </TouchableOpacity>
-            <View style={{ justifyContent: 'center', paddingHorizontal: 100 }}>
+            <View style={styles.jobContainer}>
               <Text style={styles.text}>Detail</Text>
             </View>
           </View>
           <View style={styles.jobDetail}>
             <View>
               {logo ? (
-                <Image style={{ height: 200 }} source={{ uri: `${logo}` }} />
+                <Image
+                  style={{ height: 200 }}
+                  resizeMode="contain"
+                  source={{ uri: `${logo}` }}
+                />
               ) : (
                 <Image
                   style={{ height: 200, width: 200 }}
+                  resizeMode="contain"
                   source={require('../../../assets/on_the_hunt_logo.png')}
                 />
               )}
@@ -101,6 +106,8 @@ const styles = StyleSheet.create({
 
     flex: 0,
   },
+  backArrowContainer: { justifyContent: 'flex-end' },
+  jobContainer: { justifyContent: 'center', paddingHorizontal: 100 },
   company: {
     fontWeight: 'bold',
     fontSize: 25,

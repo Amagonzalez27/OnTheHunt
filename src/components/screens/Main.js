@@ -2,14 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { f } from '../../config/firebase_config';
 
-/**
- * SIGNOUT USER
-  auth
-  .signOut()
-  .then(() => console.log('Logged out successful...'))
-  .catch(error => console.log('Error:', error))
- */
-
 export default class Main extends React.Component {
   state = { currentUser: null };
 
