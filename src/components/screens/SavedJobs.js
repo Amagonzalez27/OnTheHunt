@@ -34,79 +34,93 @@ class SavedJobs extends React.Component {
       .map(key => this.props.selectedJobs[key])
       .filter(job => job.saved);
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1 }}>
         <View style={styles.header}>
           <View style={{ justifyContent: 'center', paddingHorizontal: 150 }}>
             <Text style={styles.text}>Saved Jobs</Text>
           </View>
         </View>
+        {usersSavedJobs.length === 0 ? (
+          <View style={styles.container}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: '#fc5c65',
+                textAlign: 'center',
+                marginHorizontal: 10,
+              }}
+            >
+              Head back to Jobs to start saving
+            </Text>
+          </View>
+        ) : (
+          <FlatList
+            style={{ flex: 1 }}
+            data={usersSavedJobs}
+            keyExtractor={(item, id) => id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.jobContainer}>
+                <View style={styles.jobDetails}>
+                  <View style={styles.jobLogo}>
+                    {!item.company_logo ? (
+                      <Image
+                        source={require('../../../assets/job_icon.png')}
+                        style={{
+                          marginLeft: 5,
+                          width: 60,
+                          height: 60,
+                          borderRadius: 30,
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        source={{ uri: item.company_logo }}
+                        style={{
+                          marginLeft: 5,
+                          width: 60,
+                          height: 60,
+                          borderRadius: 30,
+                        }}
+                      />
+                    )}
+                  </View>
 
-        <FlatList
-          style={{ flex: 1 }}
-          data={usersSavedJobs}
-          keyExtractor={(item, id) => id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.jobContainer}>
-              <View style={styles.jobDetails}>
-                <View style={styles.jobLogo}>
-                  {!item.company_logo ? (
-                    <Image
-                      source={require('../../../assets/job_icon.png')}
-                      style={{
-                        marginLeft: 5,
-                        width: 60,
-                        height: 60,
-                        borderRadius: 30,
-                      }}
-                    />
-                  ) : (
-                    <Image
-                      source={{ uri: item.company_logo }}
-                      style={{
-                        marginLeft: 5,
-                        width: 60,
-                        height: 60,
-                        borderRadius: 30,
-                      }}
-                    />
-                  )}
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('Detail', {
+                        params: {
+                          title: item.title,
+                          company: item.company,
+                          description: item.description,
+                          location: item.location,
+                          url: item.url,
+                          howToapply: item.how_to_apply,
+                          posted: item.created_at,
+                          companyUrl: item.company_url,
+                          type: item.type,
+                          logo: item.company_logo,
+                        },
+                      })
+                    }
+                  >
+                    <Text>{item.position}</Text>
+                    <Text>{item.company}</Text>
+                    <Text>{item.location}</Text>
+                  </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate('Detail', {
-                      params: {
-                        title: item.title,
-                        company: item.company,
-                        description: item.description,
-                        location: item.location,
-                        url: item.url,
-                        howToapply: item.how_to_apply,
-                        posted: item.created_at,
-                        companyUrl: item.company_url,
-                        type: item.type,
-                        logo: item.company_logo,
-                      },
-                    })
-                  }
-                >
-                  <Text>{item.position}</Text>
-                  <Text>{item.company}</Text>
-                  <Text>{item.location}</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonsContainer}>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => this.addToAppliedJobs(item)}
+                  >
+                    <Text style={styles.textBtn}>Applied</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-
-              <View style={styles.buttonsContainer}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => this.addToAppliedJobs(item)}
-                >
-                  <Text style={styles.textBtn}>Applied</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
-        />
+            )}
+          />
+        )}
       </View>
     );
   }
@@ -115,6 +129,8 @@ class SavedJobs extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     backgroundColor: '#2c3e50',
