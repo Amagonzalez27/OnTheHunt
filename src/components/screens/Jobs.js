@@ -6,7 +6,6 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  Button,
 } from 'react-native';
 import { database } from '../../config/firebase_config';
 import { connect } from 'react-redux';
@@ -61,46 +60,64 @@ class Jobs extends React.Component {
         style={{ flex: 1 }}
         data={this.props.jobs}
         keyExtractor={(item, id) => id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.jobContainer}>
-            <View>
-              {!item.company_logo ? (
-                <Image
-                  source={require('../../../assets/job_icon.png')}
-                  style={{
-                    marginLeft: 5,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 25,
-                  }}
-                />
-              ) : (
-                <Image
-                  source={{ uri: item.company_logo }}
-                  style={{
-                    marginLeft: 5,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 25,
-                  }}
-                />
-              )}
-            </View>
+        renderItem={({ item }) => {
+          let title = item.title;
+          let company = item.company;
+          if (title.length > 19) title = title.substring(0, 19);
+          if (company.length > 15) company = company.substring(0, 15);
+          return (
+            <View style={styles.jobContainer}>
+              <View style={styles.jobDetailContainer}>
+                <View style={styles.jobLogo}>
+                  {!item.company_logo ? (
+                    <Image
+                      source={require('../../../assets/on_the_hunt_logo.png')}
+                      style={{
+                        marginLeft: 5,
+                        width: 60,
+                        height: 60,
+                        borderRadius: 30,
+                      }}
+                    />
+                  ) : (
+                    <Image
+                      source={{ uri: item.company_logo }}
+                      style={{
+                        marginLeft: 5,
+                        width: 60,
+                        height: 60,
+                        borderRadius: 30,
+                      }}
+                    />
+                  )}
+                </View>
 
-            <View style={{ marginRight: 10 }}>
-              <TouchableOpacity>
-                <Text>{item.title}</Text>
-                <Text>{item.company}</Text>
-                <Text>{item.location}</Text>
-              </TouchableOpacity>
+                <View style={{ flex: 2 }}>
+                  <TouchableOpacity style={styles.jobDetail}>
+                    <Text>{title}</Text>
+                    <Text>{company}</Text>
+                    <Text>{item.location}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => this.addToSavedJobs(item)}
+                >
+                  <Text style={styles.text}>Save</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => this.addToAppliedJobs(item)}
+                >
+                  <Text style={styles.text}>Applied</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <Button title="Save" onPress={() => this.addToSavedJobs(item)} />
-            <Button
-              title="Applied"
-              onPress={() => this.addToAppliedJobs(item)}
-            />
-          </View>
-        )}
+          );
+        }}
       />
     );
   }
@@ -108,17 +125,40 @@ class Jobs extends React.Component {
 
 const styles = StyleSheet.create({
   jobContainer: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingVertical: 10,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    borderColor: 'red',
+    justifyContent: 'space-evenly',
+    flexDirection: 'column',
+    paddingVertical: 15,
     borderWidth: 1,
+    borderColor: '#bdbdbd',
+    backgroundColor: '#eeeeee',
+  },
+
+  buttonsContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: '#fc5c65',
+    backgroundColor: '#fc5c65',
+    borderRadius: 25,
+    paddingVertical: 10,
+    width: 100,
+    margin: 5,
+  },
+  text: {
+    textAlign: 'center',
+  },
+  jobDetailContainer: {
+    flexDirection: 'row',
+    // justifyContent: 'space-around',
+    marginBottom: 5,
+  },
+  jobLogo: {
+    justifyContent: 'flex-start',
+    flex: 1,
+    marginLeft: 10,
   },
 });
 

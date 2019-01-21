@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#2c3e50',
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: 20,
   },
   input: {
     marginBottom: 20,
@@ -155,7 +154,6 @@ const styles = StyleSheet.create({
   },
   jobInput: {
     color: 'black',
-
     fontSize: 25,
     marginBottom: 30,
     alignSelf: 'flex-start',

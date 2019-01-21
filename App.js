@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './src/store';
-import Ionicons from '@expo/vector-icons';
 
 import {
   createSwitchNavigator,
@@ -19,11 +18,25 @@ import SavedJobs from './src/components/screens/SavedJobs';
 import Applied from './src/components/screens/Applied';
 
 // create bottom tabs
-const TabStack = createBottomTabNavigator({
-  Jobs: { screen: Home },
-  Saved: { screen: SavedJobs },
-  Applied: { screen: Applied },
-});
+const TabStack = createBottomTabNavigator(
+  {
+    Jobs: { screen: Home },
+    Saved: { screen: SavedJobs },
+    Applied: { screen: Applied },
+  },
+  {
+    navigationOptions: {},
+    tabBarOptions: {
+      labelStyle: {
+        fontSize: 18,
+      },
+      activeTintColor: '#fc5c65',
+      style: {
+        backgroundColor: '#2c3e50',
+      },
+    },
+  }
+);
 
 // create app's navigation stack
 const AppStack = createStackNavigator(
