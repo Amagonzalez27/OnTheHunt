@@ -6,4 +6,4 @@ npm-debug.*
 *.key
 *.mobileprovision
 .env
-./src/config/*
+src/config/firebase_config.js
