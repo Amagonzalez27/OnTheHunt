@@ -72,7 +72,7 @@ class Home extends React.Component {
               <TextInput
                 styl={styles.jobInput}
                 autoCapitalize="none"
-                placeholder="Description..."
+                placeholder="Job title..."
                 placeholderTextColor="rgba(33,33,33,0.7)"
                 onChangeText={text => this.setState({ description: text })}
                 value={this.state.description}

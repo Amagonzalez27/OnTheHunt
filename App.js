@@ -9,6 +9,8 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation';
 
+import { BottomTabBar } from 'react-navigation-tabs';
+
 // import the different screens
 import Loading from './src/components/screens/Loading';
 import SignUp from './src/components/screens/SignUp';
@@ -17,20 +19,40 @@ import Home from './src/components/screens/Home';
 import SavedJobs from './src/components/screens/SavedJobs';
 import Applied from './src/components/screens/Applied';
 import JobDetail from './src/components/screens/JobDetail';
+import { Ionicons } from '@expo/vector-icons/';
+
+const TabBarComponent = props => <BottomTabBar {...props} />;
 
 // create bottom tabs
 const TabStack = createBottomTabNavigator(
   {
-    Jobs: { screen: Home },
-    Saved: { screen: SavedJobs },
-    Applied: { screen: Applied },
+    Jobs: {
+      screen: Home,
+      navigationOptions: {
+        tabBarIcon: ({ focused, horizontal, tintColor }) => (
+          <Ionicons name="ios-briefcase" size={26} color={tintColor} />
+        ),
+      },
+    },
+    Saved: {
+      screen: SavedJobs,
+      navigationOptions: {
+        tabBarIcon: ({ focused, horizontal, tintColor }) => (
+          <Ionicons name="ios-heart" size={26} color={tintColor} />
+        ),
+      },
+    },
+    Applied: {
+      screen: Applied,
+      navigationOptions: {
+        tabBarIcon: ({ focused, horizontal, tintColor }) => (
+          <Ionicons name="md-checkmark-circle" size={26} color={tintColor} />
+        ),
+      },
+    },
   },
   {
-    navigationOptions: {},
     tabBarOptions: {
-      labelStyle: {
-        fontSize: 18,
-      },
       activeTintColor: '#fc5c65',
       style: {
         backgroundColor: '#2c3e50',
