@@ -5,6 +5,8 @@ import {
   Text,
   TouchableOpacity,
   Animated,
+  DatePickerIOS,
+  TextInput,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons/';
 
@@ -17,9 +19,10 @@ export default class Progress extends React.Component {
     };
     this.state = {
       expanded: true,
-      date: new Date(),
       animation: new Animated.Value(),
     };
+
+    this.renderPanel = this.renderPanel.bind(this);
   }
 
   toggle() {
@@ -51,17 +54,36 @@ export default class Progress extends React.Component {
     });
   }
 
+  renderPanel() {
+    if (this.state.expanded) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItem: 'center' }}
+        >
+          <View
+            style={{
+              alignSelf: 'center',
+              marginLeft: 10,
+              borderWidth: 1,
+              borderColor: '#bdbdbd',
+              width: 350,
+              height: 200,
+              backgroundColor: '#bdbdbd',
+            }}
+          >
+            <Text style={styles.panelText}>Date Applied: 1/22/2019</Text>
+            <Text style={styles.panelText}>Connections: Geoff Bass</Text>
+            <Text style={styles.panelText}>Phone Screen: 1/25/2019</Text>
+            <Text style={styles.panelText}>Project Due Date:</Text>
+            <Text style={styles.panelText}>In-Person Date:</Text>
+          </View>
+        </View>
+      );
+    }
+  }
+
   render() {
     let icon = this.icons.down;
-    let today = this.state.date;
-    let dd = today.getDate();
-    let mm = today.getMonth();
-    let yyyy = today.getFullYear();
-    console.log(mm);
-
-    if (dd < 10) dd = '0' + dd;
-    if (mm < 10) mm = mm + 1;
-    today = mm + '/' + dd + '/' + yyyy;
 
     if (this.state.expanded) {
       icon = this.icons.up;
@@ -73,14 +95,18 @@ export default class Progress extends React.Component {
           style={styles.progressContainer}
           onLayout={this._setMaxHeight.bind(this)}
         >
-          <TouchableOpacity onPress={this.toggle.bind(this)}>
-            <Text style={styles.text}>
-              <Ionicons name={`${icon}`} size={28} />
-              Progress
-            </Text>
+          <TouchableOpacity
+            onPress={this.toggle.bind(this)}
+            style={styles.progressBtn}
+          >
+            <Ionicons name={`${icon}`} size={28} />
+
+            <Text style={styles.text}>Progress</Text>
           </TouchableOpacity>
         </View>
-        <View onLayout={this._setMaxHeight.bind(this)} />
+        <View onLayout={this._setMaxHeight.bind(this)}>
+          {this.renderPanel()}
+        </View>
       </Animated.View>
     );
   }
@@ -96,5 +122,20 @@ var styles = StyleSheet.create({
     fontSize: 20,
     color: '#2c3e50',
     fontWeight: 'bold',
+    paddingVertical: 20,
+  },
+  panelText: {
+    fontSize: 15,
+    margin: 10,
+    color: '#2c3e50',
+    fontWeight: '600',
+    borderBottomWidth: 3,
+    borderBottomColor: '#2c3e50',
+  },
+  progressBtn: {
+    marginLeft: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

@@ -47,7 +47,7 @@ class Applied extends React.Component {
             data={usersAppliedJobs}
             keyExtractor={(item, id) => id.toString()}
             renderItem={({ item }) => (
-              <View>
+              <View style={{ paddingBottom: 10 }}>
                 <View style={styles.jobContainer}>
                   <View style={styles.jobDetails}>
                     <View style={styles.jobLogo}>
