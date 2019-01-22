@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 
 import { f, auth } from '../../config/firebase_config';
@@ -37,6 +38,29 @@ class Home extends React.Component {
       .signOut()
       .then(() => console.log('Logged out successful...'))
       .catch(error => console.log('Error:', error));
+  }
+
+  renderJobs() {
+    if (this.props.isFetchingJobs) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text>Loading</Text>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+
+    if (this.props.jobs.length) {
+      return <Jobs jobs={this.props.jobs} navigation={this.props.navigation} />;
+    }
+
+    return <Image style={styles.logo} source={Logo} />;
   }
 
   render() {
@@ -96,11 +120,7 @@ class Home extends React.Component {
             <Text style={styles.btnText}>Hunt</Text>
           </TouchableOpacity>
         </View>
-        {this.props.jobs.length ? (
-          <Jobs jobs={this.props.jobs} navigation={this.props.navigation} />
-        ) : (
-          <Image style={styles.logo} source={Logo} />
-        )}
+        {this.renderJobs()}
       </View>
     );
   }
@@ -181,6 +201,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   currentUser: state.currentUser,
   jobs: state.jobs,
+  isFetchingJobs: state.isFetchingJobs,
 });
 
 const mapDisptachToProps = dispatch => ({

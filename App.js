@@ -57,6 +57,10 @@ const TabStack = createBottomTabNavigator(
       style: {
         backgroundColor: '#2c3e50',
       },
+      tabStyle: {
+        height: 60,
+        paddingTop: 10,
+      },
     },
   }
 );

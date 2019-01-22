@@ -6,8 +6,9 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  LinkingIOS,
 } from 'react-native';
+import { WebBrowser } from 'expo';
+
 import HTML from 'react-native-render-html';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -26,6 +27,7 @@ export default class JobDetail extends React.Component {
       type,
     } = this.props.navigation.state.params.params;
 
+    console.log(companyUrl, 'companyUrl');
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -66,7 +68,7 @@ export default class JobDetail extends React.Component {
               <Text style={styles.jobHeaderText}>{type}</Text>
               <Text
                 style={{ color: 'blue' }}
-                onPress={() => LinkingIOS.openURL(`${companyUrl}`)}
+                onPress={() => WebBrowser.openBrowserAsync(`${companyUrl}`)}
               >
                 More About Us!
               </Text>

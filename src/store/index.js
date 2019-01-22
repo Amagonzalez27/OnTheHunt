@@ -7,6 +7,7 @@ import { database } from '../config/firebase_config';
  */
 const GET_USER = 'GET_USER';
 const GET_JOBS = 'GET_JOBS';
+const IS_FETCHING_JOBS = 'IS_FETCHING_JOBS';
 const GET_USERS_JOBS = 'GET_USERS_JOBS';
 const DELETE_JOB = 'DELETE_JOB';
 const ADD_JOB = 'ADD_JOB';
@@ -20,7 +21,7 @@ export const getUser = user => ({
   user,
 });
 
-export const getJobs = jobs => ({
+export const setJobs = jobs => ({
   type: GET_JOBS,
   jobs,
 });
@@ -40,6 +41,10 @@ export const addToJobList = job => ({
   job,
 });
 
+export const isFetchingJobs = () => ({
+  type: IS_FETCHING_JOBS,
+});
+
 /**
  * THUNK CREATORS
  */
@@ -47,11 +52,11 @@ export const addToJobList = job => ({
 export const fetchJobs = (des, loc) => {
   return dispatch => {
     let url = `https://jobs.github.com/positions.json?description=${des}&location=${loc}`;
-
+    dispatch(isFetchingJobs());
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        dispatch(getJobs(data));
+        dispatch(setJobs(data));
       })
       .catch(error => console.log(error));
   };
@@ -88,6 +93,7 @@ const initialState = {
   currentUser: {},
   jobs: [],
   usersSelectedJobs: {},
+  isFetchingJobs: false,
 };
 
 /**
@@ -99,7 +105,9 @@ const user = (state = initialState, action) => {
     case GET_USER:
       return { ...state, currentUser: action.user };
     case GET_JOBS:
-      return { ...state, jobs: action.jobs };
+      return { ...state, jobs: action.jobs, isFetchingJobs: false };
+    case IS_FETCHING_JOBS:
+      return { ...state, isFetchingJobs: true };
     case GET_USERS_JOBS:
       return {
         ...state,
