@@ -18,7 +18,7 @@ export default class Progress extends React.Component {
       down: 'ios-arrow-dropdown',
     };
     this.state = {
-      expanded: true,
+      expanded: false,
       animation: new Animated.Value(),
     };
 
@@ -26,10 +26,10 @@ export default class Progress extends React.Component {
   }
 
   toggle() {
-    let initialValue = this.state.expanded
+    let initialValue = !this.state.expanded
         ? this.state.maxHeight + this.state.minHeight
         : this.state.minHeight,
-      finalValue = this.state.expanded
+      finalValue = !this.state.expanded
         ? this.state.minHeight
         : this.state.maxHeight + this.state.minHeight;
     this.setState(state => {
@@ -71,11 +71,19 @@ export default class Progress extends React.Component {
               backgroundColor: '#bdbdbd',
             }}
           >
-            <Text style={styles.panelText}>Date Applied: 1/22/2019</Text>
-            <Text style={styles.panelText}>Connections: Geoff Bass</Text>
-            <Text style={styles.panelText}>Phone Screen: 1/25/2019</Text>
-            <Text style={styles.panelText}>Project Due Date:</Text>
-            <Text style={styles.panelText}>In-Person Date:</Text>
+            <Text style={styles.panelText}>
+              Date Applied: {this.props.dateApplied}
+            </Text>
+            <Text style={styles.panelText}>
+              Connections: {this.props.connection}
+            </Text>
+            <Text style={styles.panelText}>
+              Phone Screen: {this.props.phoneScreen}
+            </Text>
+            <Text style={styles.panelText}>
+              Project Due Date: {this.props.projectDueDate}
+            </Text>
+            <Text style={styles.panelText}>On-site: {this.props.onsite}</Text>
           </View>
         </View>
       );
@@ -83,10 +91,10 @@ export default class Progress extends React.Component {
   }
 
   render() {
-    let icon = this.icons.down;
+    let icon = this.icons.up;
 
     if (this.state.expanded) {
-      icon = this.icons.up;
+      icon = this.icons.down;
     }
 
     return (
