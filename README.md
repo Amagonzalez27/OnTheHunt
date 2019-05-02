@@ -14,19 +14,30 @@ https://docs.expo.io/versions/latest/introduction/installation/
 
 I wanted to create an application to help my fellow classmates find their future jobs after bootcamp. With this inspiration, I wanted to learn how to make a mobile application so I learned how to build a React-Native app in 2 days. On The Hunt was also built using Firebase (non-relational database). By using Firebase-realtime database I was able to include authentication and update the data in real time. A user had the option of adding jobs to their saved or applied list. A user can also view job descriptions.
 
-## View
+## Views
 ===
 
-![Image of Sign Up View]()
+Sign up View
+---
 <img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/signup-view.png?raw=true" width="300">
-![Image of Main View]()
+
+Main View
+---
 <img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/main-view.png?raw=true" width="300">
-![Image of Search View]()
+
+Search View
+---
 <img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/search-view.png?raw=true" width="300">
-![Image of Job Description View]()
+
+Job Description View
+---
 <img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/job-desc-view.png?raw=true" width="300">
-![Image of Saved View]()
+
+Saved Job View
+---
 <img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/save-view.png?raw=true" width="300">
-![Image of Applied View]()
+
+Applied Job View
+---
 <img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/applied-view.png?raw=true" width="300">
 
