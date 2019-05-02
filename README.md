@@ -17,8 +17,8 @@ I wanted to create an application to help my fellow classmates find their future
 ## View
 ===
 
-![Image of Sign Up View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/signup-view.png&w=800&h=600?raw=true)
-![Image of Main View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/main-view.png&w=800&h=600?raw=true)
+![Image of Sign Up View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/signup-view.png?raw=true&w=800&h=600)
+![Image of Main View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/main-view.png?raw=true&w=800&h=600)
 ![Image of Search View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/search-view.png&w=800&h=600?raw=true)
 ![Image of Job Description View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/job-desc-view.png&w=800&h=600?raw=true)
 ![Image of Saved View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/save-view.png&w=800&h=600?raw=true)
