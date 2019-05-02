@@ -17,10 +17,10 @@ I wanted to create an application to help my fellow classmates find their future
 ## View
 ===
 
-![Image of Sign Up View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/signup-view.png?raw=true&w=600&h=200)
-![Image of Main View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/main-view.png?raw=true&w=600&h=200)
-![Image of Search View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/search-view.png?raw=true&w=600&h=20)
-![Image of Job Description View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/job-desc-view.png?raw=true&w=600&h=200)
-![Image of Saved View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/save-view.pnga?raw=true&w=600&h=200)
+![Image of Sign Up View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/signup-view.png?raw=true&h=200)
+![Image of Main View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/main-view.png?raw=true&h=200)
+![Image of Search View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/search-view.png?raw=true&h=200)
+![Image of Job Description View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/job-desc-view.png?raw=true&h=200)
+![Image of Saved View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/save-view.png?raw=true&h=200)
 ![Image of Applied View]()
 
