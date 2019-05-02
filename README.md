@@ -17,11 +17,16 @@ I wanted to create an application to help my fellow classmates find their future
 ## View
 ===
 
-![Image of Sign Up View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/signup-view.png?raw=true&h=200)
-<img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/signup-view.png?raw=true&h=200" width="300">
-![Image of Main View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/main-view.png?raw=true&h=200)
-![Image of Search View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/search-view.png?raw=true&h=200)
-![Image of Job Description View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/job-desc-view.png?raw=true&h=200)
-![Image of Saved View](https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/save-view.png?raw=true&h=200)
+![Image of Sign Up View]()
+<img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/signup-view.png?raw=true" width="300">
+![Image of Main View]()
+<img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/main-view.png?raw=true" width="300">
+![Image of Search View]()
+<img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/search-view.png?raw=true" width="300">
+![Image of Job Description View]()
+<img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/job-desc-view.png?raw=true" width="300">
+![Image of Saved View]()
+<img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/save-view.png?raw=true" width="300">
 ![Image of Applied View]()
+<img src="https://github.com/Amagonzalez27/OnTheHunt/blob/master/assets/applied-view.png?raw=true" width="300">
 
